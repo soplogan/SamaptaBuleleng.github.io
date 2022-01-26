@@ -1,0 +1,707 @@
+/*General set-up*/
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=The+Nautigal:wght@700&display=swap');            /*font link import*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;                
+  margin: 0;
+  padding: 0;
+  border: none;                           /*box model setting*/
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;                 /*flexbox items positioning*/
+  font-family: Lora, sans-serif;
+  color: #d6d8de;                       /*soft light gray for better contrast*/
+  font-weight: 300;  
+  margin: 0;   
+  padding: 0; 
+  font-size: 1.2rem;                      /*typography setting*/
+}
+
+main {
+  flex-grow: 1;                            /*flexbox main items even layout*/
+}
+
+i {
+  margin: 2rem;                             /*social links spacing*/      
+}
+                 
+.accent-color {
+  color: #f2784b;                        /*accent-color added to string text*/
+}
+
+h1, h2, h3 {
+  font-family: Source Sans Pro, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.9rem;
+  color: #d6d8de;
+  margin: 1.25rem;                         /*headings typography*/
+}
+
+/*Navigation bar template was borrowed from https://codepen.io/biblos/pen/babJvO and later resdesigned according to project needs*/
+
+.header-fixed {
+  top: 0;
+  z-index: 1;
+  width: 100vw;                              /*parent container positioning against descendant containers*/
+  background-color: #333333;                
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;                      
+  line-height: 2.3rem;                      /*flexbox layout for container holding menu links*/
+  border-bottom: 0.2rem solid #e94f64;    /*accent color bottom line on navbar*/
+}
+
+.menu a {
+  text-decoration: none;                     /*menu link styling*/
+}
+
+.menu a:hover{
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+  color: #e94f64;                           /*menu link mouse over styling*/
+}
+
+.active {
+  border-bottom: 2px solid #eb9532;      
+  font-size: 125%;                            /*selected link style*/
+}
+
+#menu-logo {
+  height: 5.3rem;
+  width: 5.3rem;
+  border-radius: 100%;                         /*logo round shaping*/
+  border: 0.125rem solid #d6d8de;
+  margin: 0.7rem 0 0 1.35rem;                  /*positioning symmetrically*/
+  padding: 0.2rem;                             /*logo shape styling*/
+}
+
+#menu-logo:hover {
+ -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2); 
+  border-color: #e94f64;                     /*mouse over zoom logo style */
+}
+
+.navbar .logo {
+  flex: 3;                                     /*flexbox item logo positioning against text menu links*/
+}
+
+.navbar nav {
+  flex: 8;                                     /*flexbox text menu items positioning against logo*/                                     
+}
+
+/*Sandwich and round shaped menu button*/
+
+.navbar label {  
+  margin: 1rem;                                     /*round button adjustment on right and top of mobile screen*/                       
+  padding: 1.75rem 1.25rem;                         /*navbar padding*/
+  position: relative;
+  z-index: 3;                                       /*round menu button overstackssandwich menu in responsive format*/
+}
+
+.navbar label i {
+  position: relative;
+  height: 0.1rem;
+  width: 1.125rem;                                  /*toggle and cross icons size*/                                          
+}
+
+.navbar label i:before,
+.navbar label i:after {
+  content: '';
+  height: 100%;
+  position: absolute;
+  width: 100%;                                      /*round button and sandwich menu bars and cross design*/
+}
+
+.navbar label i,
+.navbar label i:before,
+.navbar label i:after {
+  display: block;
+  background: #d6d8de;                         /*round menu button and sandwich menu alignment*/
+}
+
+.navbar label i:before {
+  top: 0.5rem;
+}
+
+.navbar label i:after {                             /*spacing between sandwich menu bars*/
+  top: -0.5rem;
+}
+
+.navbar #navbar-toggle {                             /*sandwich menu offset against round button menu*/
+  display: none;
+}
+
+.header #navbar-toggle:checked ~ .menu {
+  visibility: visible;
+  opacity: 0.99;                                      /*transition from sandwich menu to round button menu*/
+}
+
+.header #navbar-toggle:checked ~ label {
+  background: #eb9532;
+  border-radius: 50%;                                 /*round button shape and color*/
+}
+
+
+.header #navbar-toggle:checked ~ label i {
+  background: transparent;                            /*three parallel bars to cross transition*/
+}
+
+.header #navbar-toggle:checked ~ label i:before {
+  transform: rotate(-45deg);
+}
+
+.header #navbar-toggle:checked ~ label i:after {
+  transform: rotate(45deg);
+}
+
+.header #navbar-toggle:checked ~ label:not(.steps) i:before,
+.header #navbar-toggle:checked ~ label:not(.steps) i:after {
+  top: 0;
+}
+
+/*Responsive navigation*/
+
+/*Transition to sandwich menu for devices up to 820px*/
+
+@media only screen and (max-width: 820px) {
+  .navbar nav {
+    visibility: hidden;                   /*menu pop up stay invisible until sandwich menu is clicked*/                       
+    z-index: 2;                           /*pop up menu overstacks sandwich menu*/                  
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: table;
+    background: #d6d8de;                 /*color of small screen menu pop up*/
+  }
+
+  .navbar nav ul {
+    display: table-cell;
+    vertical-align: middle;                 /*pop up menu list display*/
+  }
+
+  .navbar nav li {
+    display: block;
+    text-align: center;
+    padding: 1.5rem;                      /*pop up menu alignment and spacing between list items*/
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    font-weight: 500;                     /*pop up menu items typography*/
+  }
+
+  .navbar nav li:hover {                    
+    background: #333333;                /*pop up menu mouse over styling*/               
+  }
+
+  .navbar nav li a {
+    color: #333333;                      /*elimination of default blue color in link elements*/
+  }
+}
+
+/*Classic menu display for all devices over 820px*/
+
+@media only screen and (min-width: 820px) {
+  .navbar nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    list-style: none;
+  }
+
+  .navbar nav li {
+    flex: 1;
+  }
+
+  .navbar nav li a {
+    display: block;
+    padding: 0 0.5rem;
+    font-size: 1.3rem;
+    line-height: 3.8rem;                             /*block setting for hover over effect*/
+    text-transform: uppercase;
+    color: #d6d8de;
+    text-decoration: none;                          /*list items typography and removal of default link color*/
+  }
+
+  .navbar nav li:hover {
+    background: #656565;                          /*hover over color changing effect for menu items*/
+  }
+
+  .navbar label {
+    display: none;                                  /*sandwich menu setting to invisible*/
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .header-fixed {
+    width: 100vw;                                       /*nav bar full length on wider screens*/
+  }
+}
+
+/*Hero image*/
+
+.hero-outer {
+  display: flex;                                   /*flexbox model setting*/
+  flex-direction: column;
+  margin: 0;                                       /*flex container screen fit*/ 
+  background-color: #d6d8de;                     /*outer division layout and siziing*/
+}
+
+#hero-image {
+  flex-grow: 1;                                                     /*child flex container ratio*/
+  height: 100vh;
+  width: 100vw;                                                     /*child flex container size*/
+  background: url('../images/hero-image.jpg') no-repeat center;     /*hero image rendering in center and without mosaic*/
+}
+
+/*Responsive hero image for small screen devices smaller than 768px*/
+
+@media only screen and (max-width: 768px) {                 /*media query*/
+
+  @keyframes zoominoutsinglefeatured {
+    0% {
+      transform: scale(0.4,0.4);
+    }
+    50% {
+      transform: scale(1.1,1.1);
+    }
+    100% {
+      transform: scale(1,1);                                /*zoom in - zoom out transition between smaller - bigger -normal*/
+    }    
+  }                                                        
+
+  #hero-image {
+    background-size: contain;                                 /*debugging of cut image on smaller screens*/                                                          
+    animation: zoominoutsinglefeatured 15s;                   /*zoom in - zoom out animation  length*/            
+  }
+
+  .hero-outer {
+    max-height: 60vh;
+    width: 100vw;                                             /*flex container sizing for smaller screens*/
+  }                                                         
+}
+
+/*Responsive hero image for devices over 768px*/
+
+@media only screen and (min-width: 768px) {                   /*media query*/              
+
+  @keyframes zoominoutsinglefeatured {
+    0% {
+      transform: scale(0.4,0.4);
+    }
+    50% {
+      transform: scale(0.8,0.8);
+    }
+    100% {
+      transform: scale(1,1);                                  /*zoom in - zoom out transition between smaller - bigger -normal*/
+    }  
+  }
+  
+  #hero-image {
+    background-size: contain;                                 /*debugging of cut image on larger screens*/                                
+    animation: zoominoutsinglefeatured 15s;                   /*zoom in - zoom out effect length*/            
+  }
+
+  .hero-outer {
+    max-height: 85vh;
+    width: 100vw;                                             /*flex container sizing for smaller screens*/
+  }
+}
+
+/* Responsive footer template was borrowed at https://webdevtrick.com/html-css-footer/ and later redisigned according to project needs*/
+
+footer {
+  bottom: 0;                                        /*footer main container fixed positioning to bottom*/
+ }
+
+footer p {
+  margin: 1.25rem;                                  /*spacing out text*/
+}
+
+.footer-container {
+  background-color: #333333;
+  width: 100vw;
+  padding: 2rem 1.8rem;                             /*footer styling, sizing and alignment*/
+ }
+  
+.footer-container .footer-left,
+.footer-container .footer-center,
+.footer-container .footer-right { 
+  display: inline-block;
+  vertical-align: top;                              /*footer child containers positioning and alignment*/
+}
+  
+.footer-container .footer-left {
+  width: 40%;                                       /*left child container ratio*/
+}
+  
+.footer-container h3 span{ 
+  color: #eb9532;                                  /*accent color in headings*/               
+}
+  
+.footer-container .footer-center {
+  width: 35%;                                       /*center child container ratio*/
+}
+  
+.footer-container .footer-center i {
+  color: #eb9532;
+  font-size: 1.5rem;                                 /*fontawesome icons styling*/
+}
+  
+.footer-container .footer-center p {
+  display: inline-block;
+  color: #d6d8de;                                 /*child center container paragraph layout and styling*/
+}
+  
+.footer-container .footer-center p a {
+  color: #d6d8de;
+  text-decoration: none;                            /*email link styling*/
+}
+
+.footer-container .footer-center p a:hover {
+  color: #e5c454;
+  font-size: 1.2rem;                                /*email link mouse over styling*/
+}
+  
+.footer-container .footer-right {
+  width: 20%;                                       /*right child container ratio*/
+}
+  
+.footer-container .footer-icons {
+  margin-top: 1.6rem;                               /*social icons positioning*/
+}
+  
+.footer-container .footer-icons a {
+  font-size: 1.3rem;
+  color: #e94f64;                                 /*social link icons typography*/                     
+}
+
+.footer-container .footer-icons a:hover {
+  font-size: 1.5rem;
+  color: #e5c454;                                 /*social link icons mouser over styling*/                     
+}
+
+.footer-copyright {
+  color: #eb9532;
+  font-size: xx-small;                              /*copyright typography*/
+}
+
+.footer-right h3 {
+  font-family: 'The Nautigal', sans-serif;
+  text-transform: none;
+  font-size: 2.4rem;
+  color: #e94f64;                                 /*company name unique styling*/
+}
+  
+/*Responsive footer for devices with screens less than 880px*/
+
+@media only screen and (max-width: 880px) {
+
+  .footer-container .footer-left,
+  .footer-container .footer-center,
+  .footer-container .footer-right {
+    display: block;                                 /*child containers display in blocks one on top another*/
+    width: 100%;                                    
+    margin-bottom: 2.5rem;
+    text-align: center;                             /*child containers content alignement*/
+  }                                               
+}
+
+/*Contact page*/
+
+/*Contact page template was borrowed from https://www.codinglabweb.com/2021/04/contact-us-form-in-html-and-css-free.html 
+The borrowed version was restyled according to project needs*/
+
+.contact {
+  background-color: #d6d8de;
+  width: 100vw; 
+}
+
+.contact-container .contact-content {
+  display: flex;                                    /*flexbox model setting*/            
+  align-items: center;
+  justify-content: space-between;                     
+}
+
+.contact-container .contact-content .left-side {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;                           /*vertical display of content*/
+  align-items: center;                              /*contact details alignment centrally*/
+  justify-content: center;
+  margin-bottom: 4rem;                              /*air to breath on the bottom*/
+  position: relative;                              /*left child container sizing and alignment*/
+}
+
+.contact-content .left-side::before {
+  content: '';                                       /*property to insert generated divider*/
+  position: absolute;
+  height: 90%;                                       /*divider height*/
+  width: 0.13rem;
+  right: -1rem;                                      /*divider alignment on horizontal axis*/                                
+  top: 50%;
+  transform: translateY(-50%);                       /*divider alignment centrally along vertical axis*/
+  background: #f2784b;                             /*divider styling and layout*/
+}
+
+.contact-content .left-side .details { 
+  margin: 2rem;                                       
+  text-align: center;                                /*left child container contact details layout*/                        
+}                                                   
+
+.contact-content .left-side .details i {
+  font-size: 1.9rem;
+  color: #f2784b;
+  margin-bottom: 0.6rem;                            /*fontawesome typography and alignment*/                 
+}
+
+.contact-content .left-side .details .topic {
+  font-size: 1.3rem;
+  padding: 1rem;
+  letter-spacing: 0.3rem;
+  font-weight: 600;   
+  color: #eb9532;                                  /*left child container topic typography*/
+}
+
+.contact-content .left-side .details .text-one,
+.contact-content .left-side .details .text-two  {
+  font-size: 1.3rem;
+  letter-spacing: 0.2rem;
+  font-weight: 500;
+  color: #333333;                                   /*left child container text typography*/
+}
+
+.contact-container .contact-content .right-side {
+  width: 100vw;
+  margin-left: 4.7rem;                               /*right child containner and divider alignment*/
+}
+
+.contact-content .right-side .topic-text {
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: 0.7rem;
+  text-transform: uppercase;
+  color: #e94f64;                                  /*right child container content typography*/
+}
+
+.right-side p {
+  color: #333333;
+  padding: 2rem 4rem 2rem 0;                        /*right child container paragraph typography and alignment*/
+}
+
+.right-side .input-box {
+  height: 3rem;
+  width: 95%;
+  margin: 0.75rem 0;                                 /*input box fields sizing and alignement*/
+}
+
+.right-side .input-box input {
+  height: 95%;
+  width: 95%;                                       /*size of input fields*/
+  font-size: 1rem;                                  /*font size of input placeholders*/
+  background: #F0F1F8;                            /*input fields color*/
+  border-radius: 0.3rem;
+  padding: 0 0.9rem;                                /*input fileds styling*/                  
+}
+
+.right-side .message-box {
+  min-height: 14rem;                               /*input message box sizing*/
+}
+
+.right-side .button {
+  display: inline-block;
+  margin-top: 0.75rem;                             /*input submit button sizing and positioning*/
+}
+
+.right-side .button [type="submit"] {
+  color: #d6d8de;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.4rem;
+  background: #333333;                            /*input submit button styling*/
+}
+
+.button [type="submit"]:hover {
+  background: #eb9532;                            /*input submit button mouse over styling*/
+}
+
+.text-one a {
+  text-decoration: none;
+  color: #333333;                                 /*email link styling*/            
+}
+
+.text-one a:hover {
+  color: #eb9532;                                 /*email link hover effect*/
+}
+
+/*Responsive contact for devices with screens smaller than 820px*/
+
+@media only screen and (max-width: 820px) {
+
+  .contact-container {
+    margin: 2.5rem 0;
+    height: 100%;
+    width: 100%;                                      /*space around contact form*/
+  }
+
+  .contact-container .contact-content {
+    flex-direction: column-reverse;                    /*send us a message appears first*/
+  }
+
+ .contact-container .contact-content .left-side {
+   width: auto;
+   flex-direction: row;
+   margin-top: 2.5rem;
+   justify-content: center;
+   flex-wrap: wrap;                                         /*fontawesome content transition to bottom*/
+ }
+
+ .contact-container .contact-content .left-side::before {
+   display: none;                                           /*divider elimination*/
+ }
+
+ .contact-container .contact-content .right-side {
+   width: auto;
+   margin-top: 5rem;
+   margin-left: 2rem;                                       /*contact form expansion taking left side content transition to bottom*/
+ }
+}
+
+/*Post-submit thank you page*/
+
+.post-submit {
+  display: flex;    
+  background: #d6d8de;  
+  height: auto;                    /*parent container flexbox setting*/
+}
+
+.thanku-box h1{
+  padding: 2rem 2rem;
+  color: #e94f64;
+  text-align: center;               /*child container typography*/
+}
+ 
+.thanku-box p {
+  color: #333333;
+  text-align: center;
+}
+
+/*Portfolio*/
+
+#gallery {
+  padding: 20px;
+  line-height:0;
+  -webkit-column-count:2;                  
+  -moz-column-count:2;
+  column-count:2; 
+  background-color: #d6d8de;                          /*two column gallery layout*/
+}
+
+#gallery img {                              
+  width: 100%;
+  height: auto;
+  margin-bottom: 2.5rem;                                /*image alignment and sizing*/
+  filter: grayscale(100%);                              /*black and white photo effect*/
+  box-shadow: rgba(233, 79, 100, 0.95) 0px 5px 15px;  /*box-shadow effect*/                 
+  border: 0.39rem solid #eb9532;                      /*image styling*/
+}
+
+#gallery img:hover {
+  filter:none;                              /*black and white effect elimination on hover*/
+  transform: scale(1.1)                     /*additional transform animation on hover*/                       
+}
+
+/*Responsive portfolio for small screens up to 768px*/
+
+@media only screen and (max-width: 768px) {
+  #gallery {
+   -moz-column-count:    1;
+   -webkit-column-count: 1;
+    column-count:        1;                 /*one column gallery layout*/
+  }
+}
+
+/*Responsive portfolio for large screens over 1024px*/
+
+@media only screen and (min-width: 1024px) {
+  #gallery img {                              
+    width: 93%;
+    height: 100%;
+    margin: 25px;                           /*space out images between each other*/                   
+  }
+}
+
+/*Services*/
+
+.services-container {
+  display: flex;  
+  flex-wrap: wrap;
+  width: 100%;
+  height: 75vh;
+  padding: 5rem;  
+  border: 0.25rem solid orange;                        /*parent container turned flexbox*/
+}
+
+.services-container-content {
+  flex: 1;                                              /*child containers width ration*/
+}
+
+.services-container:first-child {
+  margin-right: 1.25rem;                                /*spacing between child container*/
+}
+
+.services-container-content li {
+  color: #212121;  
+  font-size: 1.4rem;
+  margin: 0.5rem;                                   /*paragraphs color in white background*/
+}
+
+.services-container-content h1 {                     /*heading color*/
+  color: orangered;
+}
+
+.services-list {
+  list-style: none;                                 /*bullet points deletion*/
+}
+
+.services-list li::before {
+  content:  "•";
+  color: orangered;
+  font-weight: 900;
+  display: inline-block;
+  width: 2rem;                                      /*new style bullet points implementation*/
+}
+
+.services-container {
+  overflow-y: auto;
+}
+
+/*Responsive services for small screens up to 490px*/
+
+@media  only screen and (max-width: 490px) {
+  .services-container {
+    margin: 0;
+    padding: 3.5rem 0;
+    justify-content: left;
+    font-size: 0.8rem;                             /*adjustments in typography and layout*/
+  }
+  .services-container h1 {
+    line-height: 2rem;                            /*heading space between lines*/
+  }
+}
